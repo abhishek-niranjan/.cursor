@@ -1,0 +1,411 @@
+---
+description: UI/UX design principles, accessibility standards, and responsive design best practices
+alwaysApply: false
+---
+# UI/UX Design Principles & Standards
+
+You are an expert in modern UI/UX design, accessibility standards (WCAG 2.1 AA), responsive design, and creating intuitive user experiences.
+
+## Design System Fundamentals
+
+### Visual Hierarchy
+- Establish clear visual hierarchy using size, weight, and spacing to guide user attention
+- Most important elements should be most prominent (larger, bolder, higher contrast)
+- Use the F-pattern or Z-pattern for content layout based on user reading behavior
+- Maintain consistent spacing scale (4px, 8px, 16px, 24px, 32px, 48px, 64px)
+- Use whitespace deliberately to create breathing room and focus
+
+### Color System
+- Define primary, secondary, and accent colors with clear purpose
+- Create color palette with proper shades (50, 100, 200...900)
+- Ensure WCAG 2.1 AA contrast ratios:
+  - Normal text: minimum 4.5:1 contrast ratio
+  - Large text (18.66px+ or 14px+ bold): minimum 3:1 contrast ratio
+  - UI components and graphical objects: minimum 3:1 contrast ratio
+- Use semantic colors for states:
+  - Success: green tones
+  - Warning: yellow/orange tones
+  - Error: red tones
+  - Info: blue tones
+- Consider color blindness (use patterns, icons, or text labels in addition to color)
+- Dark mode considerations: test all colors in both light and dark themes
+
+### Typography
+- Establish clear type scale (12px, 14px, 16px, 18px, 24px, 32px, 48px, 64px)
+- Use maximum 2-3 font families throughout application
+- Maintain line height for readability:
+  - Body text: 1.5-1.6
+  - Headings: 1.2-1.3
+  - UI elements: 1.4
+- Limit line length to 50-75 characters for optimal readability
+- Use font weights meaningfully:
+  - Regular (400) for body text
+  - Medium (500) for emphasis
+  - Semibold (600) for subheadings
+  - Bold (700) for headings
+- Ensure text remains readable at all viewport sizes
+
+### Spacing & Layout
+- Use consistent spacing scale based on 4px or 8px grid
+- Maintain proper margins and padding:
+  - Container padding: 16px (mobile), 24px (tablet), 32px+ (desktop)
+  - Section spacing: 48px-96px between major sections
+  - Component spacing: 16px-24px between related components
+- Use CSS Grid for page layouts, Flexbox for component layouts
+- Implement proper responsive breakpoints:
+  - Mobile: 320px-768px
+  - Tablet: 769px-1024px
+  - Desktop: 1025px+
+  - Wide: 1440px+
+
+## Interaction Design
+
+### User Experience Patterns
+- Keep navigation intuitive and consistent across all pages
+- Primary actions should be prominent, secondary actions subtle
+- Use familiar UI patterns (hamburger menu, tab navigation, modal dialogs)
+- Provide clear feedback for all user interactions:
+  - Hover states on interactive elements
+  - Loading states for async operations
+  - Success/error messages for form submissions
+  - Progress indicators for multi-step processes
+- Implement meaningful micro-animations (200-300ms duration)
+- Design for empty states, error states, and loading states
+
+### Button Design
+- Primary buttons: filled, high contrast, most prominent
+- Secondary buttons: outlined or ghost style
+- Tertiary buttons: text-only, minimal styling
+- Destructive actions: red color with confirmation
+- Minimum touch target size: 44x44 pixels (iOS), 48x48 pixels (Android)
+- Include proper hover, focus, active, and disabled states
+- Use clear, action-oriented labels (e.g., "Save Changes" not "Submit")
+
+### Form Design
+- Group related inputs logically
+- Use clear, descriptive labels above inputs
+- Provide helpful placeholder text (not as replacement for labels)
+- Implement inline validation with immediate feedback
+- Show error messages near the relevant field
+- Use appropriate input types (email, tel, number, date)
+- Implement proper tab order for keyboard navigation
+- Disable submit button during processing
+- Show success message after form submission
+
+### Navigation Patterns
+- Implement breadcrumbs for deep hierarchies
+- Use clear active states for current page/section
+- Limit top-level navigation to 5-7 items
+- Implement search functionality for content-heavy sites
+- Use skip navigation links for accessibility
+- Ensure navigation is keyboard accessible
+
+## Accessibility Standards (WCAG 2.1 AA)
+
+### Semantic HTML
+- Use proper HTML5 semantic elements:
+  - `<header>`, `<nav>`, `<main>`, `<article>`, `<section>`, `<aside>`, `<footer>`
+  - `<button>` for clickable actions, `<a>` for navigation
+  - `<h1>` through `<h6>` in proper hierarchy (only one `<h1>` per page)
+- Use `<label>` elements for all form inputs
+- Use `<fieldset>` and `<legend>` for grouped inputs
+- Avoid using `<div>` or `<span>` for interactive elements
+
+### ARIA Attributes
+- Use ARIA only when semantic HTML is insufficient
+- Implement proper roles: `role="navigation"`, `role="search"`, `role="banner"`
+- Use `aria-label` or `aria-labelledby` for descriptive labels
+- Implement `aria-describedby` for additional context
+- Use `aria-hidden="true"` to hide decorative elements from screen readers
+- Implement `aria-live` regions for dynamic content updates
+- Use `aria-expanded`, `aria-controls` for interactive widgets
+- Implement `aria-current="page"` for active navigation items
+
+### Keyboard Navigation
+- All interactive elements must be keyboard accessible
+- Logical tab order following visual flow (use `tabIndex` only when necessary)
+- Visible focus indicators on all interactive elements (minimum 2px outline)
+- Support standard keyboard shortcuts:
+  - Tab/Shift+Tab for navigation
+  - Enter/Space for activation
+  - Escape to close modals/dropdowns
+  - Arrow keys for menus and lists
+- Implement focus trap for modals and dialogs
+- Return focus to trigger element when closing overlays
+
+### Screen Reader Support
+- Provide alternative text for all images:
+  - Descriptive `alt` text for informative images
+  - Empty `alt=""` for decorative images
+- Use `<caption>` and `<summary>` for tables
+- Announce dynamic content changes with ARIA live regions
+- Provide skip links to bypass navigation
+- Ensure form error messages are announced
+- Use proper heading structure for content hierarchy
+
+### Focus Management
+- Visible focus states with clear contrast (not just browser default)
+- Focus should never be trapped unintentionally
+- Auto-focus on primary action in modals
+- Manage focus when showing/hiding content
+- Focus should move logically through the page
+- Implement "Skip to main content" link at top of page
+
+### Touch & Gesture Support
+- Minimum touch target size: 44x44 pixels (better: 48x48 pixels)
+- Adequate spacing between touch targets (minimum 8px)
+- Support pinch-to-zoom (don't disable it)
+- Avoid touch-only hover states
+- Implement swipe gestures where appropriate
+- Provide alternative to complex gestures
+
+## Responsive Design
+
+### Mobile-First Approach
+- Design and code for mobile viewport first
+- Progressively enhance for larger screens
+- Test on actual devices, not just browser emulation
+- Consider thumb zones for primary actions
+- Optimize images for mobile bandwidth
+
+### Breakpoint Strategy
+```css
+/* Mobile First */
+.component {
+  /* Mobile styles (320px-768px) */
+}
+
+@media (min-width: 769px) {
+  .component {
+    /* Tablet styles */
+  }
+}
+
+@media (min-width: 1025px) {
+  .component {
+    /* Desktop styles */
+  }
+}
+
+@media (min-width: 1440px) {
+  .component {
+    /* Wide desktop styles */
+  }
+}
+```
+
+### Responsive Images
+- Use responsive image techniques:
+  ```html
+  <img
+    srcset="image-320w.jpg 320w,
+            image-768w.jpg 768w,
+            image-1024w.jpg 1024w"
+    sizes="(max-width: 768px) 100vw,
+           (max-width: 1024px) 50vw,
+           33vw"
+    src="image-1024w.jpg"
+    alt="Descriptive text"
+  />
+  ```
+- Use WebP format with fallbacks
+- Implement lazy loading: `loading="lazy"`
+- Optimize image file sizes
+- Use SVG for icons and simple graphics
+
+### Layout Techniques
+- Use CSS Grid for page-level layouts
+- Use Flexbox for component-level layouts
+- Implement fluid typography with `clamp()`:
+  ```css
+  font-size: clamp(1rem, 0.5rem + 2vw, 2rem);
+  ```
+- Use CSS custom properties for responsive values
+- Avoid fixed heights; let content determine height
+- Use `gap` property for spacing in Grid/Flexbox
+
+### CSS Best Practices
+- Follow BEM methodology for class naming:
+  - Block: `.card`
+  - Element: `.card__title`
+  - Modifier: `.card--featured`
+- Use CSS custom properties for theming:
+  ```css
+  :root {
+    --color-primary: #3b82f6;
+    --spacing-unit: 8px;
+    --border-radius: 8px;
+  }
+  ```
+- Avoid `!important`; use specificity correctly
+- Keep selectors shallow (max 3 levels deep)
+- Group related properties logically
+- Use shorthand properties appropriately
+
+## Component Design Guidelines
+
+### Design Tokens
+Define and use consistent design tokens:
+```css
+:root {
+  /* Colors */
+  --color-primary-50: #eff6ff;
+  --color-primary-500: #3b82f6;
+  --color-primary-900: #1e3a8a;
+  
+  /* Spacing */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  
+  /* Typography */
+  --font-size-sm: 14px;
+  --font-size-base: 16px;
+  --font-size-lg: 18px;
+  
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+  
+  /* Border Radius */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+}
+```
+
+### Component States
+Every interactive component should have:
+1. **Default state**: Normal appearance
+2. **Hover state**: Visual feedback on mouse over
+3. **Focus state**: Visible for keyboard users
+4. **Active state**: Pressed/clicked appearance
+5. **Disabled state**: Clearly non-interactive
+6. **Loading state**: During async operations
+7. **Error state**: When validation fails
+8. **Success state**: After successful action
+
+### Animation Principles
+- Use animations to enhance understanding, not distract
+- Keep animations subtle and quick (150-300ms)
+- Respect `prefers-reduced-motion` media query:
+  ```css
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+  ```
+- Common animation patterns:
+  - Fade in/out: opacity transitions
+  - Slide in: transform translateX/Y
+  - Scale: subtle grow/shrink on interaction
+  - Skeleton loading: shimmer effect for loading states
+
+## Performance Optimization
+
+### Core Web Vitals
+Monitor and optimize for:
+- **LCP (Largest Contentful Paint)**: < 2.5s
+  - Optimize images and fonts
+  - Implement lazy loading
+  - Use CDN for static assets
+- **FID (First Input Delay)**: < 100ms
+  - Minimize JavaScript execution time
+  - Break up long tasks
+  - Use web workers for heavy computation
+- **CLS (Cumulative Layout Shift)**: < 0.1
+  - Include size attributes on images and videos
+  - Reserve space for dynamic content
+  - Avoid inserting content above existing content
+
+### Loading Strategy
+- Implement skeleton screens for loading states
+- Use progressive image loading
+- Load critical CSS inline
+- Defer non-critical CSS
+- Code-split JavaScript bundles
+- Lazy load below-the-fold images
+
+### CSS Performance
+- Minimize CSS file size
+- Avoid expensive CSS properties (box-shadow, filter on large elements)
+- Use `transform` and `opacity` for animations (GPU-accelerated)
+- Avoid layout thrashing
+- Use `will-change` sparingly for animation optimization
+
+## Design System Documentation
+
+### Component Documentation
+Each component should document:
+- Purpose and use cases
+- Props/attributes with types
+- Visual examples (all states)
+- Accessibility considerations
+- Code examples
+- Do's and Don'ts
+
+### Design Tokens Documentation
+Maintain centralized documentation of:
+- Color palette with usage guidelines
+- Typography scale with examples
+- Spacing system
+- Breakpoints
+- Shadow system
+- Animation timings
+
+## Review Checklist
+
+Before considering UI/UX design complete, verify:
+
+- [ ] Visual hierarchy is clear and intentional
+- [ ] Color contrast meets WCAG 2.1 AA standards (use contrast checker)
+- [ ] All interactive elements have hover, focus, and active states
+- [ ] Touch targets are minimum 44x44 pixels
+- [ ] Typography is readable at all viewport sizes
+- [ ] Layout is responsive across mobile, tablet, desktop
+- [ ] All images have appropriate alt text
+- [ ] Semantic HTML is used correctly
+- [ ] Keyboard navigation works for all interactions
+- [ ] Focus indicators are visible
+- [ ] Form validation provides clear feedback
+- [ ] Loading and error states are designed
+- [ ] Animations respect prefers-reduced-motion
+- [ ] Component states are comprehensive
+- [ ] Design tokens are used consistently
+- [ ] Core Web Vitals targets are met
+
+## Common Anti-Patterns to Avoid
+
+**Don't**: Use color alone to convey information  
+**Do**: Combine color with icons, patterns, or text
+
+**Don't**: Disable zoom on mobile  
+**Do**: Allow users to zoom content
+
+**Don't**: Use generic "Click here" or "Read more" link text  
+**Do**: Use descriptive link text that makes sense out of context
+
+**Don't**: Use `<div>` with onClick for buttons  
+**Do**: Use semantic `<button>` element
+
+**Don't**: Set fixed heights on content containers  
+**Do**: Let content determine height with min-height if needed
+
+**Don't**: Use placeholder text as labels  
+**Do**: Use proper `<label>` elements with placeholders as hints
+
+**Don't**: Auto-play video with sound  
+**Do**: Provide play controls and mute by default
+
+**Don't**: Remove focus outlines without replacement  
+**Do**: Provide clear custom focus indicators
+
+**Don't**: Use absolute pixel values for everything  
+**Do**: Use relative units (rem, em) for scalability
+
+**Don't**: Create navigation that requires hover to access  
+**Do**: Make all navigation accessible via click/tap

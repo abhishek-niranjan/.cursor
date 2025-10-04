@@ -1,0 +1,251 @@
+---
+description: Universal coding standards, best practices, and development workflows
+alwaysApply: true
+---
+
+# General Development Instructions
+
+You are an expert software engineer with deep knowledge of software architecture, design patterns, testing strategies, security best practices, and modern development workflows.
+
+## Core Development Principles
+
+### SOLID Principles
+
+**Single Responsibility Principle (SRP)**
+- Each module, class, or function should have one and only one reason to change
+- A function should do one thing and do it well
+- Separate concerns into distinct modules
+
+**Open/Closed Principle (OCP)**
+- Software entities should be open for extension but closed for modification
+- Use interfaces, abstract classes, and composition to achieve extensibility
+- Avoid modifying existing code; instead extend it
+
+**Liskov Substitution Principle (LSP)**
+- Subtypes must be substitutable for their base types
+- Derived classes should extend base classes without changing their behavior
+- Honor contracts established by base types
+
+**Interface Segregation Principle (ISP)**
+- Clients should not be forced to depend on interfaces they don't use
+- Prefer many small, specific interfaces over one large, general interface
+- Keep interfaces focused and cohesive
+
+**Dependency Inversion Principle (DIP)**
+- High-level modules should not depend on low-level modules; both should depend on abstractions
+- Abstractions should not depend on details; details should depend on abstractions
+- Use dependency injection to achieve loose coupling
+
+### Additional Core Principles
+
+**DRY (Don't Repeat Yourself)**
+- Every piece of knowledge must have a single, unambiguous representation
+- Abstract common functionality into reusable functions/modules
+- Avoid copy-paste programming at all costs
+
+**KISS (Keep It Simple, Stupid)**
+- Simplicity should be a key goal in design
+- Avoid unnecessary complexity
+- Choose the simplest solution that works
+
+**YAGNI (You Aren't Gonna Need It)**
+- Don't implement features until they are actually needed
+- Focus on current requirements, not speculative future needs
+- Avoid over-engineering
+
+**Separation of Concerns**
+- Separate program into distinct sections, each addressing a separate concern
+- Keep business logic separate from UI and data access layers
+- Use layered architecture (presentation, business logic, data access)
+
+**Principle of Least Surprise**
+- Code should behave in a way that users expect
+- Function names should clearly indicate what they do
+- Avoid side effects and unexpected behavior
+
+## Code Quality Standards
+
+### Naming Conventions
+
+**Variables and Functions**
+- Use descriptive, meaningful names that reveal intent
+- Avoid abbreviations unless widely understood
+- Boolean variables: use predicate names (`isActive`, `hasPermission`, `canEdit`)
+- Functions: use verb phrases (`getUserById`, `calculateTotal`, `sendEmail`)
+- Variables: use noun phrases (`user`, `totalPrice`, `emailAddress`)
+- Constants: use UPPER_SNAKE_CASE (`MAX_RETRY_COUNT`, `API_BASE_URL`)
+
+**Example:**
+```
+❌ Bad: function get(i) { return arr[i]; }
+✅ Good: function getUserById(userId) { return users.find(u => u.id === userId); }
+
+❌ Bad: const x = 5;
+✅ Good: const MAX_LOGIN_ATTEMPTS = 5;
+
+❌ Bad: let flag = true;
+✅ Good: let isAuthenticated = true;
+```
+
+### Function Design
+
+**Keep Functions Small**
+- Ideal function length: 5-20 lines
+- Each function should do one thing
+- Extract complex logic into separate helper functions
+
+**Limit Function Parameters**
+- Maximum 3-4 parameters ideal
+- Use objects/structs for functions requiring many parameters
+- Consider builder pattern or options pattern for complex configurations
+
+**Early Returns**
+- Use guard clauses to handle edge cases early
+- Avoid deep nesting by returning early
+- Makes code more readable and easier to reason about
+
+**Example:**
+```typescript
+// ❌ Bad: Deep nesting
+function processUser(user) {
+  if (user) {
+    if (user.isActive) {
+      if (user.hasPermission) {
+        // Do work
+      }
+    }
+  }
+}
+
+// ✅ Good: Early returns
+function processUser(user) {
+  if (!user) return;
+  if (!user.isActive) return;
+  if (!user.hasPermission) return;
+  
+  // Do work
+}
+```
+
+**Pure Functions When Possible**
+- Same input always produces same output
+- No side effects (no mutation of external state)
+- Easier to test and reason about
+
+### File Organization
+
+**One Primary Concept Per File**
+- Each file should focus on one main class/component/module
+- Related utility functions can be grouped together
+- Keep files under 300-400 lines
+
+**Logical Grouping**
+```
+src/
+├── components/
+│   ├── auth/
+│   │   ├── LoginForm.tsx
+│   │   ├── RegisterForm.tsx
+│   │   └── AuthContext.tsx
+│   └── common/
+│       ├── Button.tsx
+│       └── Input.tsx
+├── services/
+│   ├── authService.ts
+│   └── apiClient.ts
+├── utils/
+│   ├── validation.ts
+│   └── formatting.ts
+└── types/
+    └── index.ts
+```
+
+## Error Handling Standards
+
+### General Principles
+- Handle errors at the appropriate level
+- Provide meaningful error messages
+- Log errors with sufficient context
+- Don't expose sensitive information in error messages
+- Use typed errors/exceptions when possible
+
+### Error Handling Patterns
+
+**Try-Catch Blocks**
+```typescript
+try {
+  const result = await riskyOperation();
+  return result;
+} catch (error) {
+  if (error instanceof ValidationError) {
+    logger.warn('Validation failed', { error, context });
+    throw new UserFacingError('Invalid input provided');
+  }
+  
+  if (error instanceof NetworkError) {
+    logger.error('Network error', { error });
+    throw new UserFacingError('Connection failed. Please try again.');
+  }
+  
+  logger.error('Unexpected error', { error, stack: error.stack });
+  throw new InternalError('An unexpected error occurred');
+}
+```
+
+**Guard Clauses**
+```typescript
+function processData(data) {
+  if (!data) {
+    throw new Error('Data is required');
+  }
+  
+  if (!Array.isArray(data)) {
+    throw new Error('Data must be an array');
+  }
+  
+  if (data.length === 0) {
+    throw new Error('Data cannot be empty');
+  }
+  
+  // Process data
+}
+```
+
+**Error Recovery**
+- Implement retry logic for transient failures
+- Provide fallback mechanisms
+- Graceful degradation when possible
+
+## Testing Strategy
+
+### Testing Pyramid
+
+**Unit Tests (70%)**
+- Test individual functions in isolation
+- Fast, focused, and numerous
+- Mock external dependencies
+- Test edge cases and error conditions
+
+**Integration Tests (20%)**
+- Test interaction between components
+- Verify API endpoints work correctly
+- Test database operations
+- Test service layer integration
+
+**End-to-End Tests (10%)**
+- Test complete user workflows
+- Test critical user journeys only
+- More brittle, slower, more expensive
+
+### Testing Best Practices
+
+**AAA Pattern (Arrange, Act, Assert)**
+```typescript
+test('should calculate total with discount', () => {
+  // Arrange
+  const price = 100;
+  const quantity = 2;
+  const discount = 10;
+  
+  // Act
+  const total = calculateTotal
