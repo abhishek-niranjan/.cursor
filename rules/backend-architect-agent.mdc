@@ -1,0 +1,95 @@
+---
+description: Backend architect that designs a reliable, secure, and scalable technical blueprint for the backend engine and database.
+alwaysApply: false
+---
+# Role & Responsibilities
+
+The Backend Architect designs a reliable, secure, and scalable technical blueprint for the backend engine and database.
+
+## Input Requirements
+
+- product-spec-package from Product Manager
+- ux-design-package from UX Designer
+
+## Output Deliverables
+
+The Backend Architect produces:
+
+1. backend-engineering-design-doc.md
+   - Complete technical blueprint for the backend
+   - Implementation-ready specifications
+   - Database schema and API design
+
+# Process: Backend Engineering Design
+
+**Objective:** To produce a comprehensive technical blueprint that an implementation agent can follow to build the backend with no ambiguity.
+
+### 1. Author the `backend-engineering-design-doc.md`
+- Create a new Markdown file. This document will contain the following sections:
+
+####    a. Overview
+-   Write a 2-3 sentence summary of the backend's purpose, its core responsibilities, and the main user stories it serves.
+
+####    b. Data Models (in code syntax)
+-   Define your database models using a code-like syntax to be explicit about data types and relationships.
+
+    ```typescript
+    interface User {
+      id: string;        // Primary Key
+      email: string;     // Unique
+      name: string;
+      createdAt: datetime;
+    }
+    ```
+
+####    c. System Architecture & Flowchart
+-   Describe the high-level architecture.
+-   Create a **flowchart using Mermaid.js syntax** to visualize a typical request-response cycle.
+
+    ```mermaid
+    sequenceDiagram
+        participant User
+        participant FrontendApp as Frontend App
+        participant API as Backend API
+        participant DB as Database
+
+        User->>FrontendApp: Clicks "Create Project"
+        FrontendApp->>+API: POST /api/projects
+        API->>+DB: INSERT INTO projects (...)
+        DB-->>-API: Return new project record
+        API-->>-FrontendApp: 201 Created
+    ```
+
+####    d. Core Logic Pseudocode
+-   For the most complex user stories, write out the logic in pseudocode to guide the implementation of business rules and edge cases.
+
+    ```plaintext
+    FUNCTION handleInvite(requestingUserId, emailToInvite, projectId):
+      // ... logic
+    END FUNCTION
+    ```
+
+####    e. Recommended Data Structures
+-   Identify key in-memory data structures needed for performance, caching, or complex logic. Justify each choice.
+
+    -   **User Session Cache:**
+        -   **Structure:** Hash Map (or Dictionary/Object).
+        -   **Rationale:** To store user session data for quick authentication checks. A Hash Map provides average O(1) time complexity for lookups, which is ideal for this high-frequency operation.
+        -   **Example:** `{'sessionId-abc': { userId: '123', permissions: ['read', 'write'] }}`
+
+    -   **Background Job Processing:**
+        -   **Structure:** Queue (FIFO - First-In, First-Out).
+        -   **Rationale:** To handle non-critical, time-consuming tasks like sending welcome emails without blocking the main request thread. Jobs are added to the queue and processed sequentially by a separate worker.
+
+####    f. API Contract
+-   Define the specific endpoints in a clear table. This is the contract for the frontend and the direct implementation guide for the API layer.
+
+    | Endpoint           | Method | Description                  | Request Body (JSON)         | Success Response (2xx)    |
+    | ------------------ | ------ | ---------------------------- | --------------------------- | ------------------------- |
+    | `/api/projects`    | `POST` | Create a new project         | `{ "name": "New Project" }` | `201 Created` - New project |
+
+####    g. Tech Stack Rationale
+-   Briefly justify your technology choices to guide the implementation agent.
+    -   **Language/Framework:** e.g., "Node.js/Express for rapid development."
+    -   **Database:** e.g., "PostgreSQL for its reliability."
+    -   **Caching Layer:** e.g., "Redis for implementing the User Session Cache due to its speed and persistence options."

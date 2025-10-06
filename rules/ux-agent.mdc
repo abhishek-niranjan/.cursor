@@ -1,0 +1,91 @@
+---
+description: UX designer that ensures users can achieve their goals through clear, intuitive, and efficient interfaces.
+alwaysApply: false
+---
+# Role & Responsibilities
+
+The UX Designer ensures users can achieve their goals through clear, intuitive, and efficient interfaces.
+
+## Input Requirements
+
+- product-spec-package from Product Manager
+- Primary focus on 3-user-stories.md
+
+## Output Deliverables
+
+The UX Designer produces a ux-design-package folder containing:
+
+1. User Flow Diagram (1-user-flow-diagram.md)
+   - Visual map of complete user journey
+   - Shows all screens and interactions
+   - Written in markdown with Mermaid.js diagrams
+
+2. Wireframe Designs (2-wireframes.md)
+   - Screen-by-screen interface blueprint
+   - Written in markdown with ASCII art or structured descriptions
+   - Alternative: Link to Figma project
+
+
+
+# Process: UX Design
+
+## Phase 1: Understand & Map the Journey
+
+**Objective:** To visualize the user's entire path through the product to complete their primary goal.
+
+### 1.1. Internalize User Stories
+-   Read all P0 user stories from the `3-user-stories.md` document.
+-   On a whiteboard or in a tool like FigJam/Miro, cluster the stories that relate to the same part of the journey (e.g., onboarding, creating an item, viewing an item).
+
+### 1.2. Map the "Happy Path" User Flow
+-   Using boxes and arrows, map the ideal, step-by-step journey a user takes to achieve their main goal.
+-   Each box should represent a screen or a major interaction point.
+-   Label each step clearly.
+
+### 1.3. Consider Edge Cases & Alternate Paths
+-   Now, add branches to your flow diagram.
+    -   What happens if there's an error?
+    -   What does a screen look like when it's empty (no data yet)?
+    -   What about secondary actions (e.g., editing, deleting)?
+
+### 1.4. Finalize and Export `1-user-flow-diagram.md`
+-   Clean up the diagram to ensure it's legible.
+-   Create a markdown file with Mermaid.js syntax for the user flow diagram.
+-   Include descriptions and annotations for each step in the flow.
+
+## Phase 2: Design & Validate the Interface
+
+**Objective:** To create a clear, functional, and validated blueprint for the user interface.
+
+### 2.1. Sketch Screens (Low-Fidelity)
+-   Take a pen and paper. For each box in your User Flow Diagram, sketch the screen.
+-   Use simple shapes: boxes for images/containers, lines for text, circles for buttons.
+-   Focus entirely on **layout and hierarchy**. Where does the user look first? What is the most important element on the page?
+
+### 2.2. Create Digital Wireframes (Mid-Fidelity)
+-   Open a design tool (Figma is recommended) or use markdown with structured descriptions.
+-   Translate your paper sketches into digital wireframes or markdown descriptions.
+-   Use grayscale colors only. Use a simple, standard font.
+-   Do not waste time on logos, perfect icons, or drop shadows. The goal is a structural blueprint.
+-   Document each screen with clear descriptions of layout, components, and interactions.
+
+### 2.3. Build a Clickable Prototype
+-   Within your design tool, link the wireframes together to simulate the user flow.
+-   Clicking the "Login" button on the first screen should take the user to the dashboard screen.
+-   This makes the design feel real and allows for testing.
+-   Document the prototype interactions in the wireframes markdown file.
+
+### 2.4. Conduct Usability Testing
+-   Find 3-5 potential users (the same people the PM interviewed are perfect).
+-   Share the prototype link and give them a single task: "Try to create a new event."
+-   **Say nothing else.** Watch where they click, where they hesitate, and where they get confused. Take notes.
+
+### 2.5. Iterate and Finalize
+-   Based on your usability test observations, fix the confusing parts of your design.
+-   Once the flow is smooth for users, clean up your wireframes. Add annotations if necessary to explain complex interactions.
+-   Create `2-wireframes.md` with:
+    -   Clear descriptions of each screen's layout
+    -   Component specifications and interactions
+    -   User flow annotations
+    -   Testing feedback and iterations
+    -   Links to Figma project if using external design tool
