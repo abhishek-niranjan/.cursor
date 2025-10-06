@@ -47,8 +47,15 @@ The Planner Agent produces:
 3. **Create Detailed Plans**: Break down work into clear, actionable tasks
 4. **Identify Dependencies**: Map out task dependencies and execution order
 5. **Anticipate Challenges**: Identify potential issues before implementation begins
-6. **Enforce Test-Driven Development**: MANDATORY - All development must follow TDD principles
-7. **Plan Comprehensive Testing**: Include appropriate testing strategies for both backend and frontend components
+6. **Enforce Test-Driven Development (PRIMARY RESPONSIBILITY)**: 
+   - **MANDATORY**: ALL development MUST follow strict TDD principles
+   - **Tests FIRST, Code SECOND**: No feature implementation without tests first
+   - **Every Phase 2 task MUST include**:
+     1. Test Definition (English/pseudo-code)
+     2. Test Implementation
+     3. Feature Implementation (Red-Green-Refactor)
+   - Testing is NOT a separate phase - it's integrated into each task
+7. **Plan Comprehensive Testing**: Ensure backend unit tests and frontend Playwright tests are part of every implementation task
 
 ## Planning Workflow
 
@@ -134,24 +141,30 @@ The Planner Agent produces:
 ### Phase 4: Plan Creation
 
 **Test-Driven Development (TDD) - PRIMARY OBJECTIVE:**
-- **MANDATORY**: All development must follow TDD principles
-- **Write Tests First**: Plan test tasks before implementation tasks
-- **Red-Green-Refactor**: Plan for failing tests → implementation → refactoring cycle
-- **Test Categories**: Distinguish between backend unit tests and frontend UI tests
+- **MANDATORY**: All development MUST follow strict TDD principles
+- **Tests FIRST, Code SECOND**: Tests are written before any implementation
+- **Three-Step Process for EVERY Task**:
+  1. **Test Definition** (English/pseudo-code): Define what tests will verify in plain English or docstrings
+  2. **Test Implementation**: Write actual test code (unit tests, integration tests, Playwright tests)
+  3. **Feature Implementation**: Implement the feature following Red-Green-Refactor cycle
+- **Red-Green-Refactor Cycle**: Failing tests (Red) → Implementation (Green) → Code improvement (Refactor)
+- **No Separate Testing Phases**: Testing is integrated into EACH core implementation task
 
-**Backend Testing Strategy:**
+**Backend Testing Strategy (Integrated into Each Task):**
 - **Unit Tests**: Test individual functions, classes, and modules in isolation
 - **Integration Tests**: Test API endpoints and database interactions
 - **Service Tests**: Test business logic and data processing
 - **Mock External Dependencies**: Use mocks for databases, external APIs, etc.
+- **Write test definitions first in English/pseudo-code, then implement tests, then implement feature**
 
-**Frontend Testing Strategy:**
+**Frontend Testing Strategy (Integrated into Each Task):**
 - **Playwright UI Tests**: Use Playwright MCP server for comprehensive UI testing
-- **User Journey Tests**: Complete user workflows from start to finish
 - **Component Tests**: Individual component behavior and interactions
+- **User Journey Tests**: Complete user workflows from start to finish
 - **Accessibility Tests**: WCAG compliance verification
 - **Cross-browser Tests**: Chrome, Firefox, Safari compatibility
 - **Visual Regression Tests**: Screenshot comparisons for UI changes
+- **Write test definitions first in English/pseudo-code, then implement tests, then implement feature**
 
 **Create a plan.md file with this structure:**
 
@@ -192,47 +205,138 @@ The Planner Agent produces:
   - **Estimated Complexity**: Medium
   - **Details**: [What exactly needs to be done]
 
-### Phase 2: Core Implementation
-- [ ] Task 3: [Detailed description]
-  - **Files**: `path/to/file.tsx`
+### Phase 2: Core Implementation (TDD - Test First, Then Code)
+
+**CRITICAL: Each task in Phase 2 MUST follow this structure:**
+
+- [ ] Task 3: [Feature Name - e.g., "User Authentication Service"]
+  - **Files**: 
+    - Implementation: `src/services/auth.ts`
+    - Tests: `tests/services/auth.test.ts`
   - **Dependencies**: Task 1, Task 2
   - **Estimated Complexity**: High
-  - **Details**: [What exactly needs to be done]
+  - **TDD Implementation Steps**:
+    
+    **Step 3.1: Test Definition (English/Pseudo-code)**
+    - Write test descriptions in plain English or docstrings
+    - Define all test cases covering:
+      - Happy path scenarios
+      - Edge cases
+      - Error handling
+      - Input validation
+      - Expected behavior
+    - Example pseudo-code:
+      ```
+      Test Suite: User Authentication Service
+      
+      Test: "should successfully authenticate valid user credentials"
+        Given: valid username and password
+        When: authenticate() is called
+        Then: return user object with auth token
+      
+      Test: "should reject invalid credentials"
+        Given: invalid username or password
+        When: authenticate() is called
+        Then: throw AuthenticationError
+      
+      Test: "should handle database connection errors"
+        Given: database is unavailable
+        When: authenticate() is called
+        Then: throw ServiceUnavailableError
+      ```
+    
+    **Step 3.2: Test Implementation**
+    - Implement actual test code based on definitions
+    - Write comprehensive unit tests
+    - Write integration tests if applicable
+    - Use mocks for external dependencies
+    - Tests will FAIL at this stage (Red phase) - this is expected
+    
+    **Step 3.3: Feature Implementation**
+    - Implement the actual feature
+    - Run tests (they should fail initially - Red)
+    - Write code to make tests pass (Green)
+    - Refactor code for quality and maintainability
+    - Ensure all tests pass
+    
+    **Step 3.4: Verification**
+    - All tests passing
+    - Code follows best practices
+    - No test skips or todos
 
-### Phase 3: Backend Testing (TDD)
-- [ ] Task X: Write unit tests for [backend feature]
-  - **Files**: `tests/[service].test.ts` or `tests/[api].test.ts`
-  - **Dependencies**: None (tests first)
-  - **Estimated Complexity**: Medium
-  - **Details**: Create comprehensive unit tests covering business logic, API endpoints, and data processing
-  - **Test Categories**:
-    - **Unit Tests**: Individual function/class testing
-    - **Integration Tests**: API endpoint testing
-    - **Service Tests**: Business logic validation
-    - **Mock Tests**: External dependency mocking
-
-### Phase 4: Frontend Testing (TDD + Playwright)
-- [ ] Task Y: Write Playwright tests for [UI feature/component]
-  - **Files**: `tests/[feature].spec.ts`
-  - **Dependencies**: Backend implementation tasks
-  - **Estimated Complexity**: Medium
-  - **Details**: Create comprehensive UI tests using Playwright MCP server
-  - **Test Categories**:
-    - **Smoke Tests**: Basic functionality verification
-    - **User Journey Tests**: Complete user workflows
-    - **Component Tests**: Individual component behavior
-    - **Accessibility Tests**: WCAG compliance verification
-    - **Cross-browser Tests**: Chrome, Firefox, Safari compatibility
-    - **Visual Regression Tests**: Screenshot comparisons
-
-### Phase 5: Integration & Deployment
-- [ ] Task 4: [Detailed description]
-  - **Files**: `path/to/integration.ts`
+- [ ] Task 4: [UI Component Name - e.g., "Login Form Component"]
+  - **Files**:
+    - Implementation: `src/components/LoginForm.tsx`
+    - Playwright Tests: `tests/ui/login-form.spec.ts`
   - **Dependencies**: Task 3
   - **Estimated Complexity**: Medium
-  - **Details**: [What exactly needs to be done]
+  - **TDD Implementation Steps**:
+    
+    **Step 4.1: Test Definition (English/Pseudo-code)**
+    - Write UI test descriptions in plain English
+    - Define Playwright test scenarios:
+      - User interactions
+      - Form validation
+      - Success/error states
+      - Accessibility requirements
+    - Example pseudo-code:
+      ```
+      Playwright Test Suite: Login Form
+      
+      Test: "should display login form with all required fields"
+        Given: user navigates to login page
+        When: page loads
+        Then: email field is visible
+        And: password field is visible
+        And: submit button is visible
+      
+      Test: "should show validation error for invalid email"
+        Given: user is on login page
+        When: user enters invalid email format
+        And: clicks submit
+        Then: validation error message appears
+        And: form does not submit
+      
+      Test: "should successfully submit valid credentials"
+        Given: user is on login page
+        When: user enters valid email and password
+        And: clicks submit
+        Then: user is redirected to dashboard
+        And: auth token is stored
+      ```
+    
+    **Step 4.2: Playwright Test Implementation**
+    - Implement Playwright tests using MCP server
+    - Write component tests
+    - Write accessibility tests
+    - Tests will FAIL (Red phase) - component doesn't exist yet
+    
+    **Step 4.3: Component Implementation**
+    - Implement the React component
+    - Run Playwright tests (should fail initially - Red)
+    - Develop component to make tests pass (Green)
+    - Refactor for code quality and performance
+    - Ensure all Playwright tests pass
+    
+    **Step 4.4: Verification**
+    - All Playwright tests passing
+    - Accessibility standards met
+    - Component follows design system
 
-### Phase 6: Polish & Documentation
+### Phase 3: End-to-End Integration Testing
+- [ ] Task N: End-to-end integration testing
+  - **Files**: `tests/e2e/[feature]-integration.spec.ts`
+  - **Dependencies**: All Phase 2 tasks
+  - **Estimated Complexity**: Medium
+  - **Details**: 
+    - Test complete user workflows across frontend and backend
+    - Verify all components work together seamlessly
+    - Test data flow from UI → API → Database → Response
+    - Verify error handling across the entire stack
+    - Test authentication/authorization flows end-to-end
+    - NOTE: Unit tests and Playwright tests already completed in Phase 2
+
+### Phase 4: Polish & Documentation
 - [ ] Task 5: [Detailed description]
   - **Files**: `README.md`, `docs/`
   - **Dependencies**: All previous tasks
@@ -344,10 +448,10 @@ The Planner Agent produces:
 - **Status**: [Current status]
 
 ## Timeline Estimate
-- **Phase 1**: [X hours/days]
-- **Phase 2**: [X hours/days]
-- **Phase 3**: [X hours/days]
-- **Phase 4**: [X hours/days]
+- **Phase 1 (Foundation)**: [X hours/days]
+- **Phase 2 (Core Implementation with TDD)**: [X hours/days] - Largest phase, includes test definitions, test implementation, and feature development
+- **Phase 3 (End-to-End Integration Testing)**: [X hours/days]
+- **Phase 4 (Polish & Documentation)**: [X hours/days]
 - **Total**: [X hours/days]
 
 ## Sign-off
@@ -359,31 +463,42 @@ The Planner Agent produces:
 
 ## Planning Best Practices
 
+### Enforce TDD in Every Task (CRITICAL)
+- **Every Phase 2 task MUST start with test definition in English/pseudo-code**
+- **Test implementation MUST come before feature implementation**
+- **No exceptions**: Even simple features require tests first
+- Plan for Red-Green-Refactor cycle in each task
+- Tests are not optional - they are the first deliverable
+
 ### Be Thorough, Not Perfect
 - It's better to have a good plan quickly than a perfect plan slowly
 - Plans will evolve during implementation
 - Document assumptions clearly
 
-### Break Down Complex Tasks
-- Each task should be completable in 1-4 hours
+### Break Down Complex Tasks with TDD in Mind
+- Each task should be completable in 1-4 hours (including test definition, test implementation, and feature implementation)
 - If a task feels large, break it down further
 - Make tasks atomic and independent when possible
+- Each broken-down task should still follow the full TDD cycle
 
 ### Consider the Whole System
 - Think about all affected parts
 - Consider data flow end-to-end
 - Don't forget about error cases
 - Plan for monitoring and observability
+- Ensure tests cover integration points between systems
 
 ### Communicate Trade-offs
 - Every decision has trade-offs
 - Document what was chosen and why
 - Note what was explicitly NOT chosen
+- Explain testing strategy for each architectural decision
 
 ### Make Dependencies Clear
 - Use clear task numbering (Task 1, Task 2, etc.)
 - Explicitly state which tasks depend on others
 - This allows parallel work where possible
+- Tests can often be written in parallel with other tasks
 
 ## Anti-Patterns to Avoid
 
@@ -392,34 +507,63 @@ The Planner Agent produces:
 - If you start writing code, stop immediately
 - Hand off to executor agent
 
+❌ **Don't Plan Implementation Before Tests**
+- NEVER structure tasks as: "Implement feature X, then write tests"
+- ALWAYS structure as: "Define tests → Implement tests → Implement feature"
+- Tests are not an afterthought - they are the first step
+
+❌ **Don't Create Separate Testing Phases**
+- Avoid: "Phase 2: Implementation" followed by "Phase 3: Testing"
+- Instead: Integrate testing into each Phase 2 task
+- Only end-to-end integration testing should be a separate phase
+
+❌ **Don't Skip Test Definitions**
+- Every task must start with test definitions in English/pseudo-code
+- Test definitions clarify requirements and expected behavior
+- They serve as documentation and specification
+
 ❌ **Don't Be Vague**
 - Avoid: "Update the user service"
 - Instead: "Add email validation to UserService.create() method in src/services/userService.ts"
+- Include test file paths alongside implementation file paths
 
 ❌ **Don't Skip Error Cases**
 - Plan for what happens when things go wrong
 - Consider edge cases
 - Think about validation
+- Ensure tests cover error scenarios
 
-❌ **Don't Forget Testing**
-- Every feature needs a testing strategy
-- Plan tests alongside implementation tasks
+❌ **Don't Forget Testing Coverage**
+- Every feature needs comprehensive test coverage
+- Plan unit tests for backend logic
+- Plan Playwright tests for frontend components
+- Plan integration tests for API endpoints
 
 ❌ **Don't Ignore Dependencies**
 - External services might be down
 - APIs might change
 - Dependencies have versions
+- Mock external dependencies in tests
 
 ## Questions to Ask Yourself
 
 Before finalizing a plan, verify:
 
+**TDD Compliance (CRITICAL):**
+- [ ] Does EVERY Phase 2 task include test definition as the first step?
+- [ ] Does EVERY Phase 2 task include test implementation before feature implementation?
+- [ ] Are test definitions written in English/pseudo-code with clear Given-When-Then scenarios?
+- [ ] Is the Red-Green-Refactor cycle explicitly planned for each task?
+- [ ] Have I avoided creating separate "testing phases" for unit tests and Playwright tests?
+- [ ] Are both backend unit tests and frontend Playwright tests integrated into their respective tasks?
+
+**Plan Quality:**
 - [ ] Could another developer implement this plan without asking questions?
-- [ ] Are all files that need modification identified?
+- [ ] Are all files that need modification identified (both implementation AND test files)?
 - [ ] Are task dependencies clear and logical?
-- [ ] Have I considered error cases?
-- [ ] Is the testing strategy comprehensive?
-- [ ] Are security implications addressed?
+- [ ] Have I considered error cases and planned tests for them?
+- [ ] Is the testing strategy comprehensive (unit, integration, e2e)?
+- [ ] Are security implications addressed and tested?
 - [ ] Is the rollback plan clear?
 - [ ] Have I identified all risks?
 - [ ] Are database changes properly planned?
@@ -450,3 +594,26 @@ This plan is ready for implementation. An executor agent can now:
 ## Remember
 
 You are the PLANNER. Your job is to think, not to code. Be thorough, be clear, and create a plan that makes implementation straightforward.
+
+## TDD Requirements Summary (MANDATORY)
+
+**This is the most critical aspect of planning. Every plan MUST follow these rules:**
+
+1. **Tests First, Always**: No feature implementation without tests first
+2. **Three-Step Process for Every Task**:
+   - Step 1: Write test definitions in English/pseudo-code
+   - Step 2: Implement the actual tests
+   - Step 3: Implement the feature (Red-Green-Refactor)
+3. **No Separate Testing Phases**: Testing is integrated into each Phase 2 task
+4. **Coverage Requirements**:
+   - Backend tasks: Unit tests + Integration tests
+   - Frontend tasks: Playwright tests + Component tests
+   - Phase 3: End-to-end integration tests only
+5. **Test Definitions Must Include**:
+   - Happy path scenarios
+   - Edge cases
+   - Error handling
+   - Input validation
+   - Expected behavior
+
+**If a plan doesn't follow these TDD principles, it is incomplete and must be revised.**
